@@ -1,0 +1,1936 @@
+{% extends 'auth_base.html' %}
+
+{% block title %}Create Account | Library{% endblock %}
+
+{% block content %}
+
+<style>
+    .auth-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+        background:
+            radial-gradient(circle at top left, rgba(99, 102, 241, 0.12), transparent 35%),
+            radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.12), transparent 35%),
+            #f8f9fc;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 1050px;
+        overflow: hidden;
+        border: none;
+        border-radius: 24px;
+        background: #ffffff;
+        box-shadow: 0 20px 60px rgba(31, 41, 55, 0.12);
+    }
+
+    .register-left {
+        padding: 55px 50px;
+    }
+
+    .register-right {
+        min-height: 650px;
+        padding: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        background: linear-gradient(145deg, #4f46e5, #7c3aed);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .register-right::before,
+    .register-right::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .register-right::before {
+        width: 300px;
+        height: 300px;
+        top: -100px;
+        right: -100px;
+    }
+
+    .register-right::after {
+        width: 220px;
+        height: 220px;
+        bottom: -80px;
+        left: -80px;
+    }
+
+    .brand-icon {
+        width: 58px;
+        height: 58px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        color: white;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .auth-title {
+        font-weight: 700;
+        color: #202124;
+        margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        min-height: 48px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 10px 14px;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+    }
+
+    .field-error {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 6px;
+    }
+
+    .upload-box {
+        border: 1.5px dashed #d1d5db;
+        border-radius: 12px;
+        padding: 12px;
+        background: #fafafa;
+    }
+
+    .register-btn {
+        width: 100%;
+        min-height: 50px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    .register-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
+        color: white;
+    }
+
+    .login-link {
+        color: #4f46e5;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-link:hover {
+        text-decoration: underline;
+    }
+
+    .feature {
+        position: relative;
+        z-index: 2;
+        max-width: 390px;
+    }
+
+    .feature-icon {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.13);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        font-size: 42px;
+    }
+
+    .feature h2 {
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .feature p {
+        color: rgba(255, 255, 255, 0.82);
+        line-height: 1.7;
+    }
+
+    .benefits {
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .benefit {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        color: rgba(255, 255, 255, 0.92);
+    }
+
+    .benefit i {
+        color: #c4b5fd;
+    }
+
+    @media (max-width: 767px) {
+        .register-left {
+            padding: 40px 25px;
+        }
+
+        .register-right {
+            display: none;
+        }
+
+        .register-card {
+            border-radius: 18px;
+        }
+    }
+</style>
+
+<div class="auth-page">
+
+    <div class="register-card">
+
+        <div class="row g-0">
+
+            <!-- Registration Form -->
+            <div class="col-lg-7">
+
+                <div class="register-left">
+
+                    <div class="brand-icon">
+                        <i class="bi bi-person-plus-fill"></i>
+                    </div>
+
+                    <h1 class="auth-title">Create your account</h1>
+
+                    <p class="auth-subtitle">
+                        Join the library and start exploring your reading journey.
+                    </p>
+
+                    {% include 'messages.html' %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger rounded-3">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <form
+                        method="post"
+                        enctype="multipart/form-data"
+                        novalidate
+                    >
+
+                        {% csrf_token %}
+
+                        <!-- Username -->
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ form.username.id_for_label }}"
+                                class="form-label"
+                            >
+                                Username
+                            </label>
+
+                            {{ form.username }}
+
+                            {% for error in form.username.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ form.full_name.id_for_label }}"
+                                class="form-label"
+                            >
+                                Full Name
+                            </label>
+
+                            {{ form.full_name }}
+
+                            {% for error in form.full_name.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                        <!-- Email + Phone -->
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label
+                                    for="{{ form.email.id_for_label }}"
+                                    class="form-label"
+                                >
+                                    Email Address
+                                </label>
+
+                                {{ form.email }}
+
+                                {% for error in form.email.errors %}
+                                    <div class="field-error">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label
+                                    for="{{ form.phone.id_for_label }}"
+                                    class="form-label"
+                                >
+                                    Phone Number
+                                </label>
+
+                                {{ form.phone }}
+
+                                {% for error in form.phone.errors %}
+                                    <div class="field-error">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        <!-- Profile Image -->
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ form.profile_image.id_for_label }}"
+                                class="form-label"
+                            >
+                                Profile Image
+                            </label>
+
+                            <div class="upload-box">
+                                {{ form.profile_image }}
+                            </div>
+
+                            {% for error in form.profile_image.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ form.password1.id_for_label }}"
+                                class="form-label"
+                            >
+                                Password
+                            </label>
+
+                            {{ form.password1 }}
+
+                            {% for error in form.password1.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-4">
+
+                            <label
+                                for="{{ form.password2.id_for_label }}"
+                                class="form-label"
+                            >
+                                Confirm Password
+                            </label>
+
+                            {{ form.password2 }}
+
+                            {% for error in form.password2.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                        <button type="submit" class="register-btn">
+                            <i class="bi bi-person-check me-2"></i>
+                            Create Account
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-4">
+
+                        <span class="text-muted">
+                            Already have an account?
+                        </span>
+
+                        <a
+                            href="{% url 'login' %}"
+                            class="login-link ms-1"
+                        >
+                            Login
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-lg-5">
+
+                <div class="register-right">
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            <i class="bi bi-book-half"></i>
+                        </div>
+
+                        <h2>Your library awaits.</h2>
+
+                        <p>
+                            Create your account and keep your library experience
+                            organized, simple, and enjoyable.
+                        </p>
+
+                        <div class="benefits">
+
+                            <div class="benefit">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Manage your library account</span>
+                            </div>
+
+                            <div class="benefit">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Explore available books</span>
+                            </div>
+
+                            <div class="benefit">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Keep your profile up to date</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+{% extends 'auth_base.html' %}
+
+{% block title %}Create Account | Library{% endblock %}
+
+{% block content %}
+
+<style>
+    .auth-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+        background:
+            radial-gradient(circle at top left, rgba(99, 102, 241, 0.12), transparent 35%),
+            radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.12), transparent 35%),
+            #f8f9fc;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 1050px;
+        overflow: hidden;
+        border: none;
+        border-radius: 24px;
+        background: #ffffff;
+        box-shadow: 0 20px 60px rgba(31, 41, 55, 0.12);
+    }
+
+    .register-left {
+        padding: 55px 50px;
+    }
+
+    .register-right {
+        min-height: 650px;
+        padding: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        background: linear-gradient(145deg, #4f46e5, #7c3aed);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .register-right::before,
+    .register-right::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .register-right::before {
+        width: 300px;
+        height: 300px;
+        top: -100px;
+        right: -100px;
+    }
+
+    .register-right::after {
+        width: 220px;
+        height: 220px;
+        bottom: -80px;
+        left: -80px;
+    }
+
+    .brand-icon {
+        width: 58px;
+        height: 58px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        color: white;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .auth-title {
+        font-weight: 700;
+        color: #202124;
+        margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        min-height: 48px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 10px 14px;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+    }
+
+    .field-error {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 6px;
+    }
+
+    .password-help {
+        color: #6b7280;
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .upload-box {
+        border: 1.5px dashed #d1d5db;
+        border-radius: 12px;
+        padding: 12px;
+        background: #fafafa;
+    }
+
+    .register-btn {
+        width: 100%;
+        min-height: 50px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    .register-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
+        color: white;
+    }
+
+    .login-link {
+        color: #4f46e5;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-link:hover {
+        text-decoration: underline;
+    }
+
+    .feature {
+        position: relative;
+        z-index: 2;
+        max-width: 390px;
+    }
+
+    .feature-icon {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.13);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        font-size: 42px;
+    }
+
+    .feature h2 {
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .feature p {
+        color: rgba(255, 255, 255, 0.82);
+        line-height: 1.7;
+    }
+
+    .benefits {
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .benefit {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        color: rgba(255, 255, 255, 0.92);
+    }
+
+    .benefit i {
+        color: #c4b5fd;
+    }
+
+    @media (max-width: 767px) {
+        .register-left {
+            padding: 40px 25px;
+        }
+
+        .register-right {
+            display: none;
+        }
+
+        .register-card {
+            border-radius: 18px;
+        }
+    }
+</style>
+
+
+<div class="auth-page">
+
+    <div class="register-card">
+
+        <div class="row g-0">
+
+            <!-- Registration Form -->
+            <div class="col-lg-7">
+
+                <div class="register-left">
+
+                    <div class="brand-icon">
+                        <i class="bi bi-person-plus-fill"></i>
+                    </div>
+
+                    <h1 class="auth-title">Create your account</h1>
+
+                    <p class="auth-subtitle">
+                        Join the library and start exploring your reading journey.
+                    </p>
+
+                    {% include 'messages.html' %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger rounded-3">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+
+                        {% csrf_token %}
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">
+                                Username
+                            </label>
+
+                            {{ form.username }}
+
+                            {% for error in form.username.errors %}
+                                <div class="field-error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="{{ form.full_name.id_for_label }}" class="form-label">
+                                Full Name
+                            </label>
+
+                            {{ form.full_name }}
+
+                            {% for error in form.full_name.errors %}
+                                <div class="field-error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <!-- Email & Phone -->
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">
+                                    Email Address
+                                </label>
+
+                                {{ form.email }}
+
+                                {% for error in form.email.errors %}
+                                    <div class="field-error">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.phone.id_for_label }}" class="form-label">
+                                    Phone Number
+                                </label>
+
+                                {{ form.phone }}
+
+                                {% for error in form.phone.errors %}
+                                    <div class="field-error">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+
+                        <!-- Profile Image -->
+                        <div class="mb-3">
+
+                            <label for="{{ form.profile_image.id_for_label }}" class="form-label">
+                                Profile Image
+                            </label>
+
+                            <div class="upload-box">
+                                {{ form.profile_image }}
+                            </div>
+
+                            {% for error in form.profile_image.errors %}
+                                <div class="field-error">{{ error }}</div>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- Password -->
+                        <div class="mb-3">
+
+                            <label for="{{ form.password1.id_for_label }}" class="form-label">
+                                Password
+                            </label>
+
+                            {{ form.password1 }}
+
+                            {% for error in form.password1.errors %}
+                                <div class="field-error">{{ error }}</div>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- Confirm Password -->
+                        <div class="mb-4">
+
+                            <label for="{{ form.password2.id_for_label }}" class="form-label">
+                                Confirm Password
+                            </label>
+
+                            {{ form.password2 }}
+
+                            {% for error in form.password2.errors %}
+                                <div class="field-error">{{ error }}</div>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <button type="submit" class="register-btn">
+                            <i class="bi bi-person-check me-2"></i>
+                            Create Account
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center mt-4">
+
+                        <span class="text-muted">
+                            Already have an account?
+                        </span>
+
+                        <a href="{% url 'login' %}" class="login-link ms-1">
+                            Login
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Right Side -->
+            <div class="col-lg-5">
+
+                <div class="register-right">
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            <i class="bi bi-book-half"></i>
+                        </div>
+
+                        <h2>Your library awaits.</h2>
+
+                        <p>
+                            Create your account and keep your library experience
+                            organized, simple, and enjoyable.
+                        </p>
+
+                        <div class="benefits">
+
+                            <div class="benefit">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Manage your library account</span>
+                            </div>
+
+                            <div class="benefit">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Explore available books</span>
+                            </div>
+
+                            <div class="benefit">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Keep your profile up to date</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %} {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'auth_base.html' %}
+
+{% block title %}Create Account | Library{% endblock %}
+
+{% block content %}
+
+<div class="register-page">
+    <div class="register-container">
+
+        <!-- Left Side -->
+        <div class="register-intro">
+            <div class="intro-content">
+                <span class="brand-badge">
+                    <i class="bi bi-book-half"></i>
+                    Library
+                </span>
+
+                <h1>
+                    Begin your
+                    <span>reading journey.</span>
+                </h1>
+
+                <p>
+                    Create your account and discover a world of books,
+                    knowledge, and endless possibilities.
+                </p>
+
+                <div class="intro-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <div>
+                            <strong>Explore Books</strong>
+                            <small>Discover your next favorite book.</small>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+                        <div>
+                            <strong>Personal Account</strong>
+                            <small>Keep your library experience personal.</small>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="bi bi-bookmark-heart"></i>
+                        </div>
+                        <div>
+                            <strong>Build Your Collection</strong>
+                            <small>Keep track of the books you love.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Right Side -->
+        <div class="register-form-section">
+
+            <div class="register-card">
+
+                <div class="form-header">
+                    <div class="form-icon">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+
+                    <h2>Create your account</h2>
+
+                    <p>
+                        Join our library community today.
+                    </p>
+                </div>
+
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+                {% if form.non_field_errors %}
+                    <div class="form-errors">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+
+                    <!-- Profile Image -->
+                    <div class="profile-upload">
+                        <div class="profile-preview">
+                            <i class="bi bi-person"></i>
+                        </div>
+
+                        <div class="profile-upload-content">
+                            <label for="id_profile_image">
+                                Profile picture
+                            </label>
+
+                            <small>
+                                JPG, PNG or JPEG
+                            </small>
+
+                            <input
+                                type="file"
+                                name="profile_image"
+                                id="id_profile_image"
+                                accept="image/*"
+                            >
+                        </div>
+                    </div>
+
+
+                    <!-- Username -->
+                    <div class="form-group">
+                        <label for="id_username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="bi bi-person"></i>
+
+                            <input
+                                type="text"
+                                name="username"
+                                id="id_username"
+                                placeholder="Choose a username"
+                                value="{{ form.username.value|default:'' }}"
+                                autocomplete="username"
+                                required
+                            >
+                        </div>
+
+                        {% for error in form.username.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+
+                    <!-- Name -->
+                    <div class="name-row">
+
+                        <div class="form-group">
+                            <label for="id_first_name">
+                                First name
+                            </label>
+
+                            <div class="input-wrapper">
+                                <i class="bi bi-person"></i>
+
+                                <input
+                                    type="text"
+                                    name="first_name"
+                                    id="id_first_name"
+                                    placeholder="First name"
+                                    value="{{ form.first_name.value|default:'' }}"
+                                    autocomplete="given-name"
+                                >
+                            </div>
+
+                            {% for error in form.first_name.errors %}
+                                <small class="field-error">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="id_last_name">
+                                Last name
+                            </label>
+
+                            <div class="input-wrapper">
+                                <i class="bi bi-person"></i>
+
+                                <input
+                                    type="text"
+                                    name="last_name"
+                                    id="id_last_name"
+                                    placeholder="Last name"
+                                    value="{{ form.last_name.value|default:'' }}"
+                                    autocomplete="family-name"
+                                >
+                            </div>
+
+                            {% for error in form.last_name.errors %}
+                                <small class="field-error">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="id_email">
+                            Email address
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="bi bi-envelope"></i>
+
+                            <input
+                                type="email"
+                                name="email"
+                                id="id_email"
+                                placeholder="you@example.com"
+                                value="{{ form.email.value|default:'' }}"
+                                autocomplete="email"
+                                required
+                            >
+                        </div>
+
+                        {% for error in form.email.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+
+                    <!-- Phone -->
+                    <div class="form-group">
+                        <label for="id_phone">
+                            Phone number
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="bi bi-telephone"></i>
+
+                            <input
+                                type="tel"
+                                name="phone"
+                                id="id_phone"
+                                placeholder="+880 1XXXXXXXXX"
+                                value="{{ form.phone.value|default:'' }}"
+                                autocomplete="tel"
+                            >
+                        </div>
+
+                        {% for error in form.phone.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="id_password1">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="bi bi-lock"></i>
+
+                            <input
+                                type="password"
+                                name="password1"
+                                id="id_password1"
+                                placeholder="Create a strong password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('id_password1', this)"
+                            >
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+
+                        {% for error in form.password1.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+                        <label for="id_password2">
+                            Confirm password
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="bi bi-shield-lock"></i>
+
+                            <input
+                                type="password"
+                                name="password2"
+                                id="id_password2"
+                                placeholder="Repeat your password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('id_password2', this)"
+                            >
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+
+                        {% for error in form.password2.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+
+                    <!-- Terms -->
+                    <div class="terms">
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <label for="terms">
+                            I agree to the
+                            <a href="#">Terms & Conditions</a>
+                        </label>
+                    </div>
+
+
+                    <!-- Submit -->
+                    <button type="submit" class="register-btn">
+                        Create Account
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+
+                </form>
+
+
+                <!-- Login -->
+                <div class="login-link">
+                    Already have an account?
+                    <a href="{% url 'login' %}">
+                        Sign in
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: #f5f7fb;
+    }
+
+
+    /* Main */
+
+    .register-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(99, 102, 241, 0.12),
+                transparent 35%
+            ),
+            #f5f7fb;
+    }
+
+
+    .register-container {
+        width: 100%;
+        max-width: 1150px;
+        min-height: 720px;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        background: white;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+    }
+
+
+    /* Left */
+
+    .register-intro {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 65px;
+        color: white;
+        background:
+            linear-gradient(
+                145deg,
+                #312e81,
+                #4f46e5 55%,
+                #6366f1
+            );
+        overflow: hidden;
+    }
+
+
+    .register-intro::before {
+        content: "";
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.08);
+        top: -130px;
+        right: -130px;
+    }
+
+
+    .register-intro::after {
+        content: "";
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        bottom: -100px;
+        left: -100px;
+    }
+
+
+    .intro-content {
+        position: relative;
+        z-index: 2;
+    }
+
+
+    .brand-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 15px;
+        border-radius: 50px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.18);
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 35px;
+    }
+
+
+    .brand-badge i {
+        font-size: 18px;
+    }
+
+
+    .register-intro h1 {
+        font-size: 48px;
+        line-height: 1.12;
+        font-weight: 750;
+        letter-spacing: -1.5px;
+        margin: 0 0 22px;
+    }
+
+
+    .register-intro h1 span {
+        display: block;
+        color: #c7d2fe;
+    }
+
+
+    .register-intro > .intro-content > p {
+        max-width: 420px;
+        color: #e0e7ff;
+        font-size: 16px;
+        line-height: 1.75;
+        margin-bottom: 45px;
+    }
+
+
+    /* Features */
+
+    .intro-features {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+
+    .feature-icon {
+        width: 45px;
+        height: 45px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 13px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.12);
+    }
+
+
+    .feature-icon i {
+        font-size: 19px;
+    }
+
+
+    .feature-item strong {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+
+
+    .feature-item small {
+        color: #c7d2fe;
+        font-size: 12px;
+    }
+
+
+    /* Form Section */
+
+    .register-form-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 60px;
+        background: #ffffff;
+    }
+
+
+    .register-card {
+        width: 100%;
+        max-width: 520px;
+    }
+
+
+    .form-header {
+        margin-bottom: 28px;
+    }
+
+
+    .form-icon {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 21px;
+        margin-bottom: 17px;
+    }
+
+
+    .form-header h2 {
+        color: #111827;
+        font-size: 28px;
+        margin: 0 0 7px;
+        letter-spacing: -0.5px;
+    }
+
+
+    .form-header p {
+        color: #6b7280;
+        margin: 0;
+        font-size: 14px;
+    }
+
+
+    /* Form */
+
+    .form-group {
+        margin-bottom: 17px;
+    }
+
+
+    .form-group label {
+        display: block;
+        color: #374151;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+
+    .input-wrapper {
+        position: relative;
+    }
+
+
+    .input-wrapper > i:first-child {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        pointer-events: none;
+    }
+
+
+    .input-wrapper input {
+        width: 100%;
+        height: 47px;
+        padding: 0 43px;
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+        outline: none;
+        color: #111827;
+        background: #fafafa;
+        font-size: 13px;
+        transition: all 0.2s ease;
+    }
+
+
+    .input-wrapper input:focus {
+        border-color: #6366f1;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(99,102,241,0.08);
+    }
+
+
+    .input-wrapper input::placeholder {
+        color: #b0b5bd;
+    }
+
+
+    .name-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+
+    /* Password */
+
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: none;
+        color: #9ca3af;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+
+    .password-toggle:hover {
+        color: #4f46e5;
+    }
+
+
+    /* Profile */
+
+    .profile-upload {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 13px;
+        margin-bottom: 22px;
+        border: 1px dashed #d1d5db;
+        border-radius: 13px;
+        background: #fafafa;
+    }
+
+
+    .profile-preview {
+        width: 58px;
+        height: 58px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #eef2ff;
+        color: #6366f1;
+        font-size: 24px;
+        overflow: hidden;
+    }
+
+
+    .profile-upload-content label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 3px;
+        cursor: pointer;
+    }
+
+
+    .profile-upload-content small {
+        display: block;
+        color: #9ca3af;
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+
+
+    .profile-upload-content input {
+        font-size: 11px;
+        color: #6b7280;
+        max-width: 240px;
+    }
+
+
+    /* Terms */
+
+    .terms {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 5px 0 20px;
+    }
+
+
+    .terms input {
+        width: 15px;
+        height: 15px;
+        accent-color: #4f46e5;
+    }
+
+
+    .terms label {
+        color: #6b7280;
+        font-size: 12px;
+    }
+
+
+    .terms a {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+
+    /* Button */
+
+    .register-btn {
+        width: 100%;
+        height: 49px;
+        border: none;
+        border-radius: 11px;
+        background: linear-gradient(
+            135deg,
+            #4f46e5,
+            #6366f1
+        );
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 8px 20px rgba(79,70,229,0.22);
+        transition: all 0.2s ease;
+    }
+
+
+    .register-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 11px 25px rgba(79,70,229,0.28);
+    }
+
+
+    .register-btn i {
+        transition: transform 0.2s ease;
+    }
+
+
+    .register-btn:hover i {
+        transform: translateX(4px);
+    }
+
+
+    /* Login */
+
+    .login-link {
+        text-align: center;
+        color: #9ca3af;
+        font-size: 13px;
+        margin-top: 22px;
+    }
+
+
+    .login-link a {
+        color: #4f46e5;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* Errors */
+
+    .field-error {
+        display: block;
+        color: #dc2626;
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+
+    .form-errors,
+    .alert {
+        padding: 11px 13px;
+        border-radius: 9px;
+        margin-bottom: 18px;
+        font-size: 12px;
+    }
+
+
+    .form-errors {
+        color: #b91c1c;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+    }
+
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+
+        .register-container {
+            grid-template-columns: 1fr;
+            max-width: 600px;
+        }
+
+        .register-intro {
+            padding: 45px;
+        }
+
+        .register-intro h1 {
+            font-size: 38px;
+        }
+
+        .intro-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .register-form-section {
+            padding: 45px 35px;
+        }
+    }
+
+
+    @media (max-width: 550px) {
+
+        .register-page {
+            padding: 15px;
+        }
+
+        .register-container {
+            border-radius: 20px;
+        }
+
+        .register-intro {
+            padding: 35px 25px;
+        }
+
+        .register-intro h1 {
+            font-size: 32px;
+        }
+
+        .intro-features {
+            grid-template-columns: 1fr;
+        }
+
+        .register-form-section {
+            padding: 35px 22px;
+        }
+
+        .name-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+    }
+
+</style>
+
+
+<script>
+
+    function togglePassword(inputId, button) {
+
+        const input = document.getElementById(inputId);
+        const icon = button.querySelector("i");
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+
+        } else {
+
+            input.type = "password";
+
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+
+        }
+    }
+
+
+    // Profile image preview
+
+    const profileInput = document.getElementById("id_profile_image");
+    const profilePreview = document.querySelector(".profile-preview");
+
+    if (profileInput) {
+
+        profileInput.addEventListener("change", function () {
+
+            const file = this.files[0];
+
+            if (file) {
+
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+
+                    profilePreview.innerHTML = `
+                        <img
+                            src="${event.target.result}"
+                            style="width:100%;height:100%;object-fit:cover;"
+                        >
+                    `;
+
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+        });
+
+    }
+
+</script>
+
+{% endblock %} {% endcomment %}

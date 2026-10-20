@@ -1,0 +1,1389 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+
+    LM | Home
+
+{% endblock title %}
+
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       General
+    ============================== */
+
+    .home-section {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        font-weight: 700;
+        color: #202124;
+    }
+
+    .section-subtitle {
+        color: #6b7280;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+
+
+    /* ==============================
+       Hero Section
+    ============================== */
+
+    .hero-section {
+        min-height: 650px;
+        display: flex;
+        align-items: center;
+        background:
+            radial-gradient(
+                circle at top right,
+                rgba(99, 102, 241, 0.14),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at bottom left,
+                rgba(168, 85, 247, 0.12),
+                transparent 35%
+            ),
+            #f8f9fc;
+    }
+
+    .hero-content {
+        max-width: 650px;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 15px;
+        margin-bottom: 20px;
+        border-radius: 50px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        line-height: 1.1;
+        font-weight: 800;
+        color: #202124;
+        margin-bottom: 25px;
+    }
+
+    .hero-title span {
+        color: #4f46e5;
+    }
+
+    .hero-text {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .hero-primary-btn {
+        padding: 13px 25px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .hero-primary-btn:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
+    }
+
+    .hero-secondary-btn {
+        padding: 13px 25px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        color: #374151;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .hero-secondary-btn:hover {
+        color: #4f46e5;
+        border-color: #c7d2fe;
+    }
+
+
+    /* ==============================
+       Hero Illustration
+    ============================== */
+
+    .hero-illustration {
+        position: relative;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .book-stack {
+        position: relative;
+        width: 300px;
+        height: 280px;
+    }
+
+    .book {
+        position: absolute;
+        width: 220px;
+        height: 65px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 15px 30px rgba(31, 41, 55, 0.15);
+    }
+
+    .book-one {
+        background: #4f46e5;
+        transform: rotate(-8deg);
+        left: 25px;
+        top: 55px;
+    }
+
+    .book-two {
+        background: #7c3aed;
+        transform: rotate(5deg);
+        left: 45px;
+        top: 125px;
+    }
+
+    .book-three {
+        background: #6366f1;
+        transform: rotate(-4deg);
+        left: 10px;
+        top: 195px;
+    }
+
+    .floating-icon {
+        position: absolute;
+        width: 65px;
+        height: 65px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        color: #4f46e5;
+        font-size: 28px;
+        box-shadow: 0 15px 35px rgba(31, 41, 55, 0.12);
+    }
+
+    .floating-one {
+        top: 40px;
+        right: 40px;
+    }
+
+    .floating-two {
+        bottom: 40px;
+        left: 35px;
+    }
+
+
+    /* ==============================
+       Search Section
+    ============================== */
+
+    .search-wrapper {
+        margin-top: -40px;
+        position: relative;
+        z-index: 5;
+    }
+
+    .search-card {
+        padding: 30px;
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 15px 45px rgba(31, 41, 55, 0.10);
+    }
+
+    .search-title {
+        font-weight: 700;
+        color: #202124;
+        margin-bottom: 15px;
+    }
+
+    .search-box {
+        display: flex;
+        gap: 10px;
+    }
+
+    .search-input {
+        flex: 1;
+        min-height: 52px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 10px 16px;
+        outline: none;
+    }
+
+    .search-input:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+    }
+
+    .search-btn {
+        min-width: 120px;
+        border: none;
+        border-radius: 12px;
+        background: #4f46e5;
+        color: white;
+        font-weight: 600;
+    }
+
+
+    /* ==============================
+       Statistics
+    ============================== */
+
+    .stat-card {
+        height: 100%;
+        padding: 30px 20px;
+        text-align: center;
+        border: 1px solid #f0f0f0;
+        border-radius: 18px;
+        background: white;
+        transition: 0.2s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(31, 41, 55, 0.08);
+    }
+
+    .stat-icon {
+        width: 55px;
+        height: 55px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 24px;
+    }
+
+    .stat-number {
+        font-size: 30px;
+        font-weight: 800;
+        color: #202124;
+    }
+
+    .stat-label {
+        color: #6b7280;
+    }
+
+
+    /* ==============================
+       Featured Books
+    ============================== */
+
+    .book-card {
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid #f0f0f0;
+        border-radius: 18px;
+        background: white;
+        transition: 0.2s ease;
+    }
+
+    .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(31, 41, 55, 0.10);
+    }
+
+    .book-cover {
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+            145deg,
+            #eef2ff,
+            #ede9fe
+        );
+        color: #4f46e5;
+        font-size: 65px;
+    }
+
+    .book-info {
+        padding: 22px;
+    }
+
+    .book-category {
+        color: #6366f1;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .book-title {
+        margin: 8px 0;
+        font-weight: 700;
+        color: #202124;
+    }
+
+    .book-author {
+        color: #6b7280;
+        margin-bottom: 15px;
+    }
+
+    .book-link {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+
+    /* ==============================
+       Categories
+    ============================== */
+
+    .category-card {
+        height: 100%;
+        padding: 30px 20px;
+        text-align: center;
+        border: 1px solid #f0f0f0;
+        border-radius: 18px;
+        background: white;
+        text-decoration: none;
+        display: block;
+        transition: 0.2s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        border-color: #c7d2fe;
+        box-shadow: 0 15px 35px rgba(31, 41, 55, 0.08);
+    }
+
+    .category-icon {
+        width: 65px;
+        height: 65px;
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: #f5f3ff;
+        color: #7c3aed;
+        font-size: 28px;
+    }
+
+    .category-name {
+        color: #202124;
+        font-weight: 700;
+    }
+
+    .category-count {
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+
+    /* ==============================
+       How It Works
+    ============================== */
+
+    .step-card {
+        text-align: center;
+        padding: 25px;
+    }
+
+    .step-number {
+        width: 55px;
+        height: 55px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #4f46e5;
+        color: white;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .step-card h5 {
+        font-weight: 700;
+        color: #202124;
+    }
+
+    .step-card p {
+        color: #6b7280;
+        line-height: 1.7;
+    }
+
+
+    /* ==============================
+       Why Library
+    ============================== */
+
+    .why-section {
+        background: #f8f9fc;
+    }
+
+    .feature-card {
+        height: 100%;
+        padding: 30px;
+        border-radius: 18px;
+        background: white;
+        border: 1px solid #f0f0f0;
+    }
+
+    .feature-card-icon {
+        width: 55px;
+        height: 55px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 24px;
+    }
+
+    .feature-card h5 {
+        font-weight: 700;
+        color: #202124;
+    }
+
+    .feature-card p {
+        color: #6b7280;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+
+    /* ==============================
+       CTA
+    ============================== */
+
+    .cta-section {
+        padding: 90px 20px;
+    }
+
+    .cta-card {
+        padding: 70px 30px;
+        text-align: center;
+        border-radius: 25px;
+        color: white;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-card::before,
+    .cta-card::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .cta-card::before {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        right: -80px;
+    }
+
+    .cta-card::after {
+        width: 220px;
+        height: 220px;
+        bottom: -120px;
+        left: -60px;
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .cta-card h2 {
+        font-weight: 800;
+        margin-bottom: 15px;
+    }
+
+    .cta-card p {
+        max-width: 600px;
+        margin: 0 auto 30px;
+        color: rgba(255, 255, 255, 0.82);
+    }
+
+    .cta-btn {
+        display: inline-block;
+        padding: 13px 28px;
+        border-radius: 12px;
+        background: white;
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+
+    /* ==============================
+       Responsive
+    ============================== */
+
+    @media (max-width: 991px) {
+
+        .hero-section {
+            padding: 80px 0;
+        }
+
+        .hero-illustration {
+            margin-top: 40px;
+        }
+
+    }
+
+    @media (max-width: 767px) {
+
+        .home-section {
+            padding: 60px 0;
+        }
+
+        .hero-title {
+            font-size: 2.7rem;
+        }
+
+        .hero-text {
+            font-size: 16px;
+        }
+
+        .search-box {
+            flex-direction: column;
+        }
+
+        .search-btn {
+            min-height: 50px;
+        }
+
+        .hero-illustration {
+            height: 350px;
+        }
+
+    }
+
+</style>
+
+
+<!-- ==========================================
+     HERO SECTION
+========================================== -->
+
+<section class="hero-section">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+
+                <div class="hero-content">
+
+                    <div class="hero-badge">
+                        <i class="bi bi-book-half"></i>
+                        Your Digital Library
+                    </div>
+
+                    <h1 class="hero-title">
+                        Discover your next
+                        <span>great book.</span>
+                    </h1>
+
+                    <p class="hero-text">
+                        Explore, manage, and organize your library from one
+                        simple platform. Find books, discover new categories,
+                        and keep your reading journey organized.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <a href="{% url 'book_list' %}" class="hero-primary-btn">
+                            <i class="bi bi-search me-2"></i>
+                            Explore Books
+                        </a>
+
+                        <a href="{% url 'register' %}" class="hero-secondary-btn">
+                            Create Account
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-5">
+
+                <div class="hero-illustration">
+
+                    <div class="book-stack">
+
+                        <div class="book book-one">
+                            <i class="bi bi-book me-3"></i>
+                            Knowledge
+                        </div>
+
+                        <div class="book book-two">
+                            <i class="bi bi-journal-bookmark me-3"></i>
+                            Discovery
+                        </div>
+
+                        <div class="book book-three">
+                            <i class="bi bi-bookmark-star me-3"></i>
+                            Imagination
+                        </div>
+
+                    </div>
+
+                    <div class="floating-icon floating-one">
+                        <i class="bi bi-bookmark-star"></i>
+                    </div>
+
+                    <div class="floating-icon floating-two">
+                        <i class="bi bi-search"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     SEARCH SECTION
+========================================== -->
+
+<section class="search-wrapper">
+
+    <div class="container">
+
+        <div class="search-card">
+
+            <h4 class="search-title">
+                Find a book
+            </h4>
+
+            <form method="get" action="{% url 'book_list' %}">
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        name="q"
+                        class="search-input"
+                        placeholder="Search by book title, author, or category..."
+                    >
+
+                    <button type="submit" class="search-btn">
+                        <i class="bi bi-search me-2"></i>
+                        Search
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     STATISTICS
+========================================== -->
+
+<section class="home-section">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Our Library at a Glance
+            </h2>
+
+            <p class="section-subtitle">
+                Everything you need to discover and manage your reading
+                experience in one place.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-book"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        500+
+                    </div>
+
+                    <div class="stat-label">
+                        Books
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        250+
+                    </div>
+
+                    <div class="stat-label">
+                        Members
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-tags"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        25+
+                    </div>
+
+                    <div class="stat-label">
+                        Categories
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        100+
+                    </div>
+
+                    <div class="stat-label">
+                        Authors
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     FEATURED BOOKS
+========================================== -->
+
+<section class="home-section bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Featured Books
+            </h2>
+
+            <p class="section-subtitle">
+                Explore some of the books available in our library.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        <i class="bi bi-book"></i>
+                    </div>
+
+                    <div class="book-info">
+
+                        <div class="book-category">
+                            Fiction
+                        </div>
+
+                        <h5 class="book-title">
+                            The Silent Garden
+                        </h5>
+
+                        <p class="book-author">
+                            By Library Author
+                        </p>
+
+                        <a href="{% url 'book_list' %}" class="book-link">
+                            View Book
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        <i class="bi bi-journal-bookmark"></i>
+                    </div>
+
+                    <div class="book-info">
+
+                        <div class="book-category">
+                            Technology
+                        </div>
+
+                        <h5 class="book-title">
+                            Modern Technology
+                        </h5>
+
+                        <p class="book-author">
+                            By Library Author
+                        </p>
+
+                        <a href="{% url 'book_list' %}" class="book-link">
+                            View Book
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        <i class="bi bi-journal-richtext"></i>
+                    </div>
+
+                    <div class="book-info">
+
+                        <div class="book-category">
+                            Education
+                        </div>
+
+                        <h5 class="book-title">
+                            Learning Today
+                        </h5>
+
+                        <p class="book-author">
+                            By Library Author
+                        </p>
+
+                        <a href="{% url 'book_list' %}" class="book-link">
+                            View Book
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        <i class="bi bi-book-half"></i>
+                    </div>
+
+                    <div class="book-info">
+
+                        <div class="book-category">
+                            Science
+                        </div>
+
+                        <h5 class="book-title">
+                            Exploring Science
+                        </h5>
+
+                        <p class="book-author">
+                            By Library Author
+                        </p>
+
+                        <a href="{% url 'book_list' %}" class="book-link">
+                            View Book
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="text-center mt-5">
+
+            <a href="{% url 'book_list' %}" class="hero-primary-btn">
+                View All Books
+                <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     CATEGORIES
+========================================== -->
+
+<section class="home-section">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Browse Categories
+            </h2>
+
+            <p class="section-subtitle">
+                Find books based on your interests and reading preferences.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <a href="{% url 'book_list' %}" class="category-card">
+
+                    <div class="category-icon">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+
+                    <div class="category-name">
+                        Technology
+                    </div>
+
+                    <div class="category-count">
+                        Explore books
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <a href="{% url 'book_list' %}" class="category-card">
+
+                    <div class="category-icon">
+                        <i class="bi bi-flower1"></i>
+                    </div>
+
+                    <div class="category-name">
+                        Science
+                    </div>
+
+                    <div class="category-count">
+                        Explore books
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <a href="{% url 'book_list' %}" class="category-card">
+
+                    <div class="category-icon">
+                        <i class="bi bi-mortarboard"></i>
+                    </div>
+
+                    <div class="category-name">
+                        Education
+                    </div>
+
+                    <div class="category-count">
+                        Explore books
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <a href="{% url 'book_list' %}" class="category-card">
+
+                    <div class="category-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                    <div class="category-name">
+                        Fiction
+                    </div>
+
+                    <div class="category-count">
+                        Explore books
+                    </div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     HOW IT WORKS
+========================================== -->
+
+<section class="home-section bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                How It Works
+            </h2>
+
+            <p class="section-subtitle">
+                Getting started with your library is simple.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h5>
+                        Create an Account
+                    </h5>
+
+                    <p>
+                        Register for your library account and create your
+                        personal profile.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h5>
+                        Discover Books
+                    </h5>
+
+                    <p>
+                        Search through available books, authors, and
+                        categories to find what interests you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h5>
+                        Start Reading
+                    </h5>
+
+                    <p>
+                        Keep track of your library activity and enjoy
+                        discovering new books.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     WHY USE OUR LIBRARY
+========================================== -->
+
+<section class="home-section why-section">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Why Use Our Library?
+            </h2>
+
+            <p class="section-subtitle">
+                Designed to make managing and exploring books simple.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon">
+                        <i class="bi bi-search"></i>
+                    </div>
+
+                    <h5>
+                        Easy Discovery
+                    </h5>
+
+                    <p>
+                        Quickly search and discover books using titles,
+                        authors, and categories.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+
+                    <h5>
+                        Personal Account
+                    </h5>
+
+                    <p>
+                        Manage your personal profile and keep your account
+                        information organized.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon">
+                        <i class="bi bi-grid"></i>
+                    </div>
+
+                    <h5>
+                        Organized Library
+                    </h5>
+
+                    <p>
+                        Browse books through organized categories and
+                        structured library information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon">
+                        <i class="bi bi-phone"></i>
+                    </div>
+
+                    <h5>
+                        Responsive Design
+                    </h5>
+
+                    <p>
+                        Access the library comfortably from desktops,
+                        tablets, and mobile devices.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     CALL TO ACTION
+========================================== -->
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <div class="cta-card">
+
+            <div class="cta-content">
+
+                <h2>
+                    Ready to explore?
+                </h2>
+
+                <p>
+                    Create your account and start discovering books
+                    through your digital library.
+                </p>
+
+                <a href="{% url 'register' %}" class="cta-btn">
+                    Get Started
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock content %}

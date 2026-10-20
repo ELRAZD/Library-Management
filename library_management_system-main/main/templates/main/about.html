@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+
+{% block title %}
+About Us | LM Library
+{% endblock title %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #f5f3ff, #eef2ff);">
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7">
+                <span class="badge rounded-pill px-3 py-2 mb-3"
+                      style="background: #ede9fe; color: #6d28d9;">
+                    <i class="bi bi-book-half me-1"></i>
+                    About Our Library
+                </span>
+
+                <h1 class="display-4 fw-bold mb-3">
+                    A Smarter Way to
+                    <span style="color: #7c3aed;">Manage Books</span>
+                </h1>
+
+                <p class="lead text-secondary mb-4">
+                    Our Library Management System makes it simple to
+                    discover, organize, and manage books in one place.
+                </p>
+
+                <p class="text-secondary">
+                    Whether you are a student, teacher, librarian, or
+                    book enthusiast, LM provides an organized and
+                    user-friendly platform for exploring books,
+                    authors, and categories.
+                </p>
+
+                <a href="{% url 'book_list' %}"
+                   class="btn btn-lg text-white rounded-pill px-4 mt-2"
+                   style="background: #7c3aed;">
+                    <i class="bi bi-book me-2"></i>
+                    Explore Books
+                </a>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="text-center p-5 rounded-4 shadow-sm bg-white">
+                    <i class="bi bi-building fs-1"
+                       style="color: #7c3aed;"></i>
+
+                    <h3 class="fw-bold mt-3">
+                        Knowledge Starts Here
+                    </h3>
+
+                    <p class="text-secondary mb-0">
+                        Explore. Learn. Read. Grow.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Mission Section -->
+<section class="py-5 bg-white">
+    <div class="container py-5">
+
+        <div class="text-center mx-auto mb-5" style="max-width: 700px;">
+            <span class="text-uppercase fw-semibold small"
+                  style="color: #7c3aed;">
+                Our Purpose
+            </span>
+
+            <h2 class="fw-bold mt-2">
+                Our Mission
+            </h2>
+
+            <p class="text-secondary">
+                We aim to provide a simple and organized digital
+                environment where managing and exploring library
+                resources becomes easier.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="h-100 p-4 rounded-4 border text-center">
+                    <div class="d-inline-flex align-items-center justify-content-center
+                                rounded-circle mb-3"
+                         style="width: 65px; height: 65px; background: #ede9fe;">
+                        <i class="bi bi-search fs-4"
+                           style="color: #7c3aed;"></i>
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Easy Discovery
+                    </h5>
+
+                    <p class="text-secondary mb-0">
+                        Find books quickly and explore different
+                        categories with ease.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="h-100 p-4 rounded-4 border text-center">
+                    <div class="d-inline-flex align-items-center justify-content-center
+                                rounded-circle mb-3"
+                         style="width: 65px; height: 65px; background: #ede9fe;">
+                        <i class="bi bi-grid-1x2 fs-4"
+                           style="color: #7c3aed;"></i>
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Organized Library
+                    </h5>
+
+                    <p class="text-secondary mb-0">
+                        Keep books, authors, and categories organized
+                        in a structured system.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="h-100 p-4 rounded-4 border text-center">
+                    <div class="d-inline-flex align-items-center justify-content-center
+                                rounded-circle mb-3"
+                         style="width: 65px; height: 65px; background: #ede9fe;">
+                        <i class="bi bi-lightning-charge fs-4"
+                           style="color: #7c3aed;"></i>
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Simple & Efficient
+                    </h5>
+
+                    <p class="text-secondary mb-0">
+                        A clean interface designed to make library
+                        management faster and easier.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Why Choose Us -->
+<section class="py-5" style="background: #f9fafb;">
+    <div class="container py-5">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+                <span class="badge rounded-pill px-3 py-2 mb-3"
+                      style="background: #ede9fe; color: #6d28d9;">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Why Choose LM
+                </span>
+
+                <h2 class="fw-bold mb-4">
+                    Everything You Need in One Place
+                </h2>
+
+                <div class="d-flex mb-4">
+                    <i class="bi bi-check-circle-fill fs-5 me-3"
+                       style="color: #7c3aed;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1">
+                            Browse Books
+                        </h6>
+                        <p class="text-secondary mb-0">
+                            Explore available books and discover
+                            something new to read.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-4">
+                    <i class="bi bi-check-circle-fill fs-5 me-3"
+                       style="color: #7c3aed;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1">
+                            Explore Authors
+                        </h6>
+                        <p class="text-secondary mb-0">
+                            Discover authors and explore the books
+                            associated with them.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <i class="bi bi-check-circle-fill fs-5 me-3"
+                       style="color: #7c3aed;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1">
+                            Organized Categories
+                        </h6>
+                        <p class="text-secondary mb-0">
+                            Find books based on their categories
+                            and subjects.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="p-4 p-md-5 rounded-4 text-white"
+                     style="background: linear-gradient(135deg, #7c3aed, #4f46e5);">
+
+                    <i class="bi bi-bookmark-star fs-1"></i>
+
+                    <h3 class="fw-bold mt-4">
+                        Read More. Learn More.
+                    </h3>
+
+                    <p class="mb-0 opacity-75">
+                        A library is more than a collection of books.
+                        It is a place where knowledge, ideas, and
+                        curiosity come together.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA -->
+<section class="py-5 bg-white">
+    <div class="container py-5 text-center">
+
+        <i class="bi bi-book fs-1"
+           style="color: #7c3aed;"></i>
+
+        <h2 class="fw-bold mt-3">
+            Ready to Explore?
+        </h2>
+
+        <p class="text-secondary mb-4">
+            Discover your next book and start exploring our library.
+        </p>
+
+        <a href="{% url 'book_list' %}"
+           class="btn btn-lg text-white rounded-pill px-4"
+           style="background: #7c3aed;">
+            <i class="bi bi-search me-2"></i>
+            Browse Books
+        </a>
+
+    </div>
+</section>
+
+{% endblock content %}

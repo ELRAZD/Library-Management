@@ -1,0 +1,363 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
+
+    <div class="container">
+
+        <!-- Brand -->
+        <a
+            class="navbar-brand d-flex align-items-center gap-2"
+            href="{% url 'home' %}"
+        >
+
+            <span class="brand-icon">
+                <i class="bi bi-book-half"></i>
+            </span>
+
+            <span class="brand-text">
+                LM
+            </span>
+
+        </a>
+
+
+        <!-- Mobile Toggle -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <!-- Left / Main Navigation -->
+            <ul class="navbar-nav mx-auto mb-3 mb-lg-0">
+
+                <!-- Home -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'home' %}"
+                    >
+                        <i class="bi bi-house me-1"></i>
+                        Home
+                    </a>
+                </li>
+
+
+                <!-- About -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'about' %}"
+                    >
+                        <i class="bi bi-info-circle me-1"></i>
+                        About
+                    </a>
+                </li>
+
+
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'contact' %}"
+                    >
+                        <i class="bi bi-envelope me-1"></i>
+                        Contact
+                    </a>
+                </li>
+
+
+                <!-- Books -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'book_list' %}"
+                    >
+                        <i class="bi bi-book me-1"></i>
+                        Books
+                    </a>
+                </li>
+
+
+                <!-- Authors -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'author_list' %}"
+                    >
+                        <i class="bi bi-people me-1"></i>
+                        Authors
+                    </a>
+                </li>
+
+
+                <!-- Categories -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'category_list' %}"
+                    >
+                        <i class="bi bi-tags me-1"></i>
+                        Categories
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <!-- Right Side Authentication -->
+            <div class="navbar-auth d-flex align-items-center gap-2">
+
+                {% if user.is_authenticated %}
+
+                    <!-- Logout -->
+                    <a
+                        href="{% url 'logout' %}"
+                        class="btn btn-logout"
+                    >
+                        <i class="bi bi-box-arrow-right me-1"></i>
+                        Logout
+                    </a>
+
+                {% else %}
+
+                    <!-- Login -->
+                    <a
+                        href="{% url 'login' %}"
+                        class="btn btn-login"
+                    >
+                        Login
+                    </a>
+
+
+                    <!-- Register -->
+                    <a
+                        href="{% url 'register' %}"
+                        class="btn btn-register"
+                    >
+                        Register
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<style>
+
+    /* ==============================
+       Navbar
+    ============================== */
+
+    .navbar {
+        min-height: 72px;
+        z-index: 1000;
+    }
+
+
+    /* ==============================
+       Brand
+    ============================== */
+
+    .navbar-brand {
+        text-decoration: none;
+    }
+
+    .brand-icon {
+        width: 42px;
+        height: 42px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 12px;
+
+        color: white;
+
+        background: linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+        font-size: 19px;
+
+        box-shadow:
+            0 6px 15px rgba(79, 70, 229, 0.20);
+    }
+
+    .brand-text {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #202124;
+    }
+
+
+    /* ==============================
+       Navigation Links
+    ============================== */
+
+    .navbar-nav {
+        gap: 5px;
+    }
+
+    .nav-link {
+        position: relative;
+
+        padding: 9px 13px !important;
+
+        color: #4b5563 !important;
+
+        font-size: 14px;
+        font-weight: 500;
+
+        border-radius: 9px;
+
+        transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+        color: #4f46e5 !important;
+        background: #f5f3ff;
+    }
+
+    .nav-link.active {
+        color: #4f46e5 !important;
+        background: #eef2ff;
+        font-weight: 600;
+    }
+
+
+    /* ==============================
+       Authentication Buttons
+    ============================== */
+
+    .navbar-auth {
+        margin-left: 15px;
+    }
+
+    .navbar-auth .btn {
+        min-height: 40px;
+        padding: 8px 17px;
+
+        border-radius: 10px;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        transition: all 0.2s ease;
+    }
+
+
+    /* Login */
+
+    .btn-login {
+        color: #4f46e5;
+        background: transparent;
+        border: 1px solid #e0e7ff;
+    }
+
+    .btn-login:hover {
+        color: #4338ca;
+        background: #eef2ff;
+        border-color: #c7d2fe;
+    }
+
+
+    /* Register */
+
+    .btn-register {
+        color: white;
+        background: linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+        border: none;
+
+        box-shadow:
+            0 5px 15px rgba(79, 70, 229, 0.18);
+    }
+
+    .btn-register:hover {
+        color: white;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 8px 20px rgba(79, 70, 229, 0.25);
+    }
+
+
+    /* Logout */
+
+    .btn-logout {
+        color: #dc3545;
+        background: #fff5f5;
+        border: 1px solid #ffe0e0;
+    }
+
+    .btn-logout:hover {
+        color: #bb2d3b;
+        background: #ffe9e9;
+        border-color: #ffcaca;
+    }
+
+
+    /* ==============================
+       Mobile
+    ============================== */
+
+    @media (max-width: 991px) {
+
+        .navbar-nav {
+            gap: 2px;
+            margin-top: 15px;
+        }
+
+        .nav-link {
+            padding: 10px 12px !important;
+        }
+
+        .navbar-auth {
+            margin-left: 0;
+            margin-top: 12px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+    }
+
+
+    @media (max-width: 575px) {
+
+        .navbar-auth {
+            flex-direction: column;
+            align-items: stretch !important;
+        }
+
+        .navbar-auth .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+    }
+
+</style>

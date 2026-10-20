@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Contact Us | LM Library
+{% endblock title %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #f5f3ff, #eef2ff);">
+    <div class="container py-5">
+
+        <div class="text-center mx-auto" style="max-width: 750px;">
+
+            <span class="badge rounded-pill px-3 py-2 mb-3"
+                  style="background: #ede9fe; color: #6d28d9;">
+                <i class="bi bi-chat-dots me-1"></i>
+                Get In Touch
+            </span>
+
+            <h1 class="display-5 fw-bold mb-3">
+                Contact <span style="color: #7c3aed;">Us</span>
+            </h1>
+
+            <p class="lead text-secondary mb-0">
+                Have a question, suggestion, or need help?
+                We'd love to hear from you.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+<section class="py-5 bg-white">
+    <div class="container py-5">
+
+        <div class="row g-5">
+
+            <!-- Contact Information -->
+            <div class="col-lg-5">
+
+                <span class="text-uppercase fw-semibold small"
+                      style="color: #7c3aed;">
+                    Contact Information
+                </span>
+
+                <h2 class="fw-bold mt-2 mb-3">
+                    Let's Talk
+                </h2>
+
+                <p class="text-secondary mb-4">
+                    If you have any questions about our library,
+                    books, accounts, or services, feel free to
+                    get in touch with us.
+                </p>
+
+
+                <!-- Email -->
+                <div class="d-flex align-items-start mb-4">
+                    <div class="d-flex align-items-center justify-content-center
+                                rounded-3 flex-shrink-0"
+                         style="width: 50px; height: 50px; background: #ede9fe;">
+                        <i class="bi bi-envelope fs-5"
+                           style="color: #7c3aed;"></i>
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="fw-bold mb-1">
+                            Email
+                        </h6>
+
+                        <p class="text-secondary mb-0">
+                            info@library.com
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Phone -->
+                <div class="d-flex align-items-start mb-4">
+                    <div class="d-flex align-items-center justify-content-center
+                                rounded-3 flex-shrink-0"
+                         style="width: 50px; height: 50px; background: #ede9fe;">
+                        <i class="bi bi-telephone fs-5"
+                           style="color: #7c3aed;"></i>
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="fw-bold mb-1">
+                            Phone
+                        </h6>
+
+                        <p class="text-secondary mb-0">
+                            +880 1XXXXXXXXX
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Address -->
+                <div class="d-flex align-items-start mb-4">
+                    <div class="d-flex align-items-center justify-content-center
+                                rounded-3 flex-shrink-0"
+                         style="width: 50px; height: 50px; background: #ede9fe;">
+                        <i class="bi bi-geo-alt fs-5"
+                           style="color: #7c3aed;"></i>
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="fw-bold mb-1">
+                            Address
+                        </h6>
+
+                        <p class="text-secondary mb-0">
+                            Dhaka, Bangladesh
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Opening Hours -->
+                <div class="d-flex align-items-start">
+                    <div class="d-flex align-items-center justify-content-center
+                                rounded-3 flex-shrink-0"
+                         style="width: 50px; height: 50px; background: #ede9fe;">
+                        <i class="bi bi-clock fs-5"
+                           style="color: #7c3aed;"></i>
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="fw-bold mb-1">
+                            Opening Hours
+                        </h6>
+
+                        <p class="text-secondary mb-0">
+                            Saturday – Thursday<br>
+                            9:00 AM – 6:00 PM
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+
+                <div class="p-4 p-md-5 rounded-4 shadow-sm border">
+
+                    <h4 class="fw-bold mb-1">
+                        Send Us a Message
+                    </h4>
+
+                    <p class="text-secondary mb-4">
+                        Fill out the form below and we'll get back to you.
+                    </p>
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+
+                            <!-- Name -->
+                            <div class="col-md-6">
+                                <label for="name"
+                                       class="form-label fw-semibold">
+                                    Your Name
+                                </label>
+
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="name"
+                                       name="name"
+                                       placeholder="Enter your name"
+                                       required>
+                            </div>
+
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <label for="email"
+                                       class="form-label fw-semibold">
+                                    Email Address
+                                </label>
+
+                                <input type="email"
+                                       class="form-control form-control-lg"
+                                       id="email"
+                                       name="email"
+                                       placeholder="you@example.com"
+                                       required>
+                            </div>
+
+
+                            <!-- Subject -->
+                            <div class="col-12">
+                                <label for="subject"
+                                       class="form-label fw-semibold">
+                                    Subject
+                                </label>
+
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="subject"
+                                       name="subject"
+                                       placeholder="What is this about?"
+                                       required>
+                            </div>
+
+
+                            <!-- Message -->
+                            <div class="col-12">
+                                <label for="message"
+                                       class="form-label fw-semibold">
+                                    Message
+                                </label>
+
+                                <textarea class="form-control"
+                                          id="message"
+                                          name="message"
+                                          rows="6"
+                                          placeholder="Write your message here..."
+                                          required></textarea>
+                            </div>
+
+
+                            <!-- Submit -->
+                            <div class="col-12">
+                                <button type="submit"
+                                        class="btn btn-lg text-white rounded-pill px-4"
+                                        style="background: #7c3aed;">
+                                    <i class="bi bi-send me-2"></i>
+                                    Send Message
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Bottom CTA -->
+<section class="py-5" style="background: #f9fafb;">
+    <div class="container py-4 text-center">
+
+        <i class="bi bi-question-circle fs-1"
+           style="color: #7c3aed;"></i>
+
+        <h3 class="fw-bold mt-3">
+            Looking for a Book?
+        </h3>
+
+        <p class="text-secondary mb-4">
+            Explore our collection and discover your next read.
+        </p>
+
+        <a href="{% url 'book_list' %}"
+           class="btn btn-outline-dark rounded-pill px-4">
+            <i class="bi bi-book me-2"></i>
+            View Books
+        </a>
+
+    </div>
+</section>
+
+{% endblock content %}
